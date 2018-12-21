@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/layui/css/layui.css">
+    <script src="../static/layui/layui.js"></script>
+</head>
+<body>
+<div class="layui-anim layui-anim-upbit">微微往上滑入</div>
+<div class="layui-anim layui-anim-scaleSpring">放大</div>
+
+<table class="layui-table">
+    <colgroup>
+        <col width="150">
+        <col width="150">
+        <col width="200">
+        <col>
+    </colgroup>
+    <thead>
+    <tr>
+        <th>人物</th>
+        <th>民族</th>
+        <th>出场时间</th>
+        <th>格言</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>贤心</td>
+        <td>汉族</td>
+        <td>1989-10-14</td>
+        <td>人生似修行</td>
+    </tr>
+    <tr>
+        <td>张爱玲</td>
+        <td>汉族</td>
+        <td>1920-09-30</td>
+        <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
+    </tr>
+    <tr>
+        <td>Helen Keller</td>
+        <td>拉丁美裔</td>
+        <td>1880-06-27</td>
+        <td> Life is either a daring adventure or nothing.</td>
+    </tr>
+    <tr>
+        <td>岳飞</td>
+        <td>汉族</td>
+        <td>1103-北宋崇宁二年</td>
+        <td>教科书再滥改，也抹不去“民族英雄”的事实</td>
+    </tr>
+    <tr>
+        <td>孟子</td>
+        <td>华夏族（汉族）</td>
+        <td>公元前-372年</td>
+        <td>猿强，则国强。国强，则猿更强！ </td>
+    </tr>
+    </tbody>
+</table>
+
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+    <legend>常规使用</legend>
+</fieldset>
+<div style="margin-left: 30px;">
+    <div id="test1"></div>
+    <div id="test2" style="margin-left: 30px;"></div>
+</div>
+<script>
+    layui.use('colorpicker', function(){
+        var $ = layui.$
+            ,colorpicker = layui.colorpicker;
+        //常规使用
+        colorpicker.render({
+            elem: '#test1' //绑定元素
+            ,change: function(color){ //颜色改变的回调
+                layer.tips('选择了：'+ color, this.elem, {
+                    tips: 1
+                });
+            }
+        });
+
+        //初始色值
+        colorpicker.render({
+            elem: '#test2'
+            ,color: '#2ec770' //设置默认色
+            ,done: function(color){
+                layer.tips('选择了：'+ color, this.elem);
+            }
+        });
+
+        //表单赋值
+        colorpicker.render({
+            elem: '#test-form'
+            ,color: '#1c97f5'
+            ,done: function(color){
+                $('#test-form-input').val(color);
+            }
+        });
+
+        //RGB 、RGBA
+        colorpicker.render({
+            elem: '#test3'
+            ,color: 'rgb(68,66,66)'
+            ,format: 'rgb' //默认为 hex
+        });
+        colorpicker.render({
+            elem: '#test4'
+            ,color: 'rgba(68,66,66,0.5)'
+            ,format: 'rgb'
+            ,alpha: true //开启透明度滑块
+        });
+
+        //开启透明度
+        colorpicker.render({
+            elem: '#test5'
+            ,color: '#009688' //hex
+            ,alpha: true //开启透明度
+            ,format: 'rgb'
+        });
+        colorpicker.render({
+            elem: '#test6'
+            ,color: 'rgb(0,150,136,0.6)' //rgba
+            ,alpha: true
+            ,format: 'rgb'
+        });
+        colorpicker.render({ //无初始色值时
+            elem: '#test7'
+            ,alpha: true
+            ,format: 'rgb'
+        });
+
+        //预定义颜色项
+        colorpicker.render({
+            elem: '#test8'
+            ,color: '#c71585'
+            ,predefine: true // 开启预定义颜色
+        });
+        colorpicker.render({
+            elem: '#test9'
+            ,color: '#9d8a0e'
+            ,predefine: true // 开启预定义颜色
+            ,colors: ['#ff8c00','#00ced1','#9d8a0e'] //自定义预定义颜色项
+        });
+
+        //开启全功能
+        colorpicker.render({
+            elem: '#test-all'
+            ,color: 'rgba(7, 155, 140, 1)'
+            ,format: 'rgb'
+            ,predefine: true
+            ,alpha: true
+            ,done: function(color){
+                $('#test-all-input').val(color); //向隐藏域赋值
+                layer.tips('给指定隐藏域设置了颜色值：'+ color, this.elem);
+
+                color || this.change(color); //清空时执行 change
+            }
+            ,change: function(color){
+                //给当前页面头部和左侧设置主题色
+                $('.header-demo,.layui-side .layui-nav').css('background-color', color);
+            }
+        });
+
+        //设定颜色框尺寸
+        colorpicker.render({
+            elem: '#test10'
+            ,size: 'lg' //大号下拉框
+        });
+        colorpicker.render({
+            elem: '#test11'
+            //,size: 'sm' //默认 sm
+        });
+        colorpicker.render({
+            elem: '#test12'
+            ,size: 'xs' //mini下拉框
+        });
+    });
+</script>
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+    <legend>总页数大于页码总数</legend>
+</fieldset>
+
+<div id="demo20"></div>
+<ul id="biuuu_city_list"></ul>
+<script>
+    layui.use(['laypage', 'layer'], function(){
+        var laypage = layui.laypage
+            ,layer = layui.layer;
+
+        //总页数大于页码总数
+        laypage.render({
+            elem: 'demo1'
+            ,count: 70 //数据总数
+            ,jump: function(obj){
+                console.log(obj)
+            }
+        });
+
+        //自定义样式
+        laypage.render({
+            elem: 'demo2'
+            ,count: 100
+            ,theme: '#1E9FFF'
+        });
+        laypage.render({
+            elem: 'demo2-1'
+            ,count: 100
+            ,theme: '#FF5722'
+        });
+        laypage.render({
+            elem: 'demo2-2'
+            ,count: 100
+            ,theme: '#FFB800'
+        });
+
+        //自定义首页、尾页、上一页、下一页文本
+        laypage.render({
+            elem: 'demo3'
+            ,count: 100
+            ,first: '首页'
+            ,last: '尾页'
+            ,prev: '<em>←</em>'
+            ,next: '<em>→</em>'
+        });
+
+        //不显示首页尾页
+        laypage.render({
+            elem: 'demo4'
+            ,count: 100
+            ,first: false
+            ,last: false
+        });
+
+        //开启HASH
+        laypage.render({
+            elem: 'demo5'
+            ,count: 500
+            ,curr: location.hash.replace('#!fenye=', '') //获取hash值为fenye的当前页
+            ,hash: 'fenye' //自定义hash值
+        });
+
+        //只显示上一页、下一页
+        laypage.render({
+            elem: 'demo6'
+            ,count: 50
+            ,layout: ['prev', 'next']
+            ,jump: function(obj, first){
+                if(!first){
+                    layer.msg('第 '+ obj.curr +' 页');
+                }
+            }
+        });
+
+        //完整功能
+        laypage.render({
+            elem: 'demo7'
+            ,count: 100
+            ,layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+            ,jump: function(obj){
+                console.log(obj)
+            }
+        });
+
+        //自定义排版
+        laypage.render({
+            elem: 'demo8'
+            ,count: 1000
+            ,layout: ['limit', 'prev', 'page', 'next']
+        });
+        laypage.render({
+            elem: 'demo9'
+            ,count: 1000
+            ,layout: ['prev', 'next', 'page']
+        });
+        laypage.render({
+            elem: 'demo10'
+            ,count: 1000
+            ,layout: ['page', 'count']
+        });
+
+        //自定义每页条数的选择项
+        laypage.render({
+            elem: 'demo11'
+            ,count: 1000
+            ,limit: 100
+            ,limits: [100, 300, 500]
+        });
+
+
+        //将一段数组分页展示
+
+        //测试数据
+        var data = [
+            '北京',
+            '上海',
+            '广州',
+            '深圳',
+            '杭州',
+            '长沙',
+            '合肥',
+            '宁夏',
+            '成都',
+            '西安',
+            '南昌',
+            '上饶',
+            '沈阳',
+            '济南',
+            '厦门',
+            '福州',
+            '九江',
+            '宜春',
+            '赣州',
+            '宁波',
+            '绍兴',
+            '无锡',
+            '苏州',
+            '徐州',
+            '东莞',
+            '佛山',
+            '中山',
+            '成都',
+            '武汉',
+            '青岛',
+            '天津',
+            '重庆',
+            '南京',
+            '九江',
+            '香港',
+            '澳门',
+            '台北',
+            '苏州',
+            '徐州',
+            '东莞',
+            '佛山',
+            '中山',
+            '成都',
+            '武汉',
+            '青岛',
+            '天津',
+            '重庆',
+            '南京',
+            '九江',
+            '香港',
+            '澳门',
+            '台北'
+        ];
+
+        //调用分页
+        laypage.render({
+            elem: 'demo20'
+            ,count: data.length
+            ,jump: function(obj){
+                //模拟渲染
+                document.getElementById('biuuu_city_list').innerHTML = function(){
+                    var arr = []
+                        ,thisData = data.concat().splice(obj.curr*obj.limit - obj.limit, obj.limit);
+                    layui.each(thisData, function(index, item){
+                        arr.push('<li>'+ item +'</li>');
+                    });
+                    return arr.join('');
+                }();
+            }
+        });
+
+    });
+</script>
+
+
+</body>
+</html>
